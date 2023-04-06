@@ -14,7 +14,7 @@ public final class Ready implements State {
     @Override
     public State checkCommand(final Command command) {
         if (command.isStart()) {
-            return new Move(chessGame, chessGame.getCurrentTeamColor());
+            return new Move(chessGame);
         }
         if (command.isEnd()) {
             return new End();

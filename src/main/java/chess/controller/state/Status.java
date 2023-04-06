@@ -9,17 +9,15 @@ import chess.view.OutputView;
 
 public class Status implements State {
     private final ChessGame chessGame;
-    private final TeamColor teamColor;
 
-    public Status(ChessGame chessGame, TeamColor teamColor) {
+    public Status(ChessGame chessGame) {
         this.chessGame = chessGame;
-        this.teamColor = teamColor;
     }
 
     State run() {
         Score score = Score.calculate(chessGame.getChessBoard());
         OutputView.printStatus(new ScoreDto(score));
-        return new Status(chessGame, teamColor);
+        return new Status(chessGame);
     }
 
     @Override
@@ -28,7 +26,7 @@ public class Status implements State {
             return new End().run(chessGame);
         }
         if (command.isMove()) {
-            Move move = new Move(chessGame, teamColor);
+            Move move = new Move(chessGame);
             return move.checkCommand(command);
         }
         if (command.isStatus()) {

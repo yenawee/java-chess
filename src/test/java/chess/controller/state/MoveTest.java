@@ -3,7 +3,6 @@ package chess.controller.state;
 import chess.controller.state.command.Command;
 import chess.controller.state.command.CommandType;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.TeamColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +20,7 @@ class MoveTest {
     @DisplayName(value = "게임이 움직임 상태일 때 start를 입력하면 예외가 발생한다.")
     void checkCommandStart() {
         // given
-        final Move move = new Move(new ChessGame(), TeamColor.WHITE);
+        final Move move = new Move(new ChessGame());
         final Command command = new Command(CommandType.START, List.of("start"));
 
         // when, then
@@ -34,7 +33,7 @@ class MoveTest {
     @DisplayName(value = "게임이 움직임 상태일 때 end를 입력하면 게임이 종료된다.")
     void checkCommandEnd() {
         // given
-        final Move move = new Move(new ChessGame(), TeamColor.WHITE);
+        final Move move = new Move(new ChessGame());
         final Command command = new Command(CommandType.END, List.of("end"));
 
         // when
@@ -49,7 +48,7 @@ class MoveTest {
     @ValueSource(strings = {"move", "move a2", "", " move ", "move a2 a3 a5", "move a2a3"})
     void checkCommandValidate(final String commands) {
         // given
-        final Move move = new Move(new ChessGame(), TeamColor.WHITE);
+        final Move move = new Move(new ChessGame());
         final Command command = new Command(CommandType.MOVE, Arrays.asList(commands.split(" ")));
 
         // when, then
@@ -62,7 +61,7 @@ class MoveTest {
     @DisplayName(value = "게임이 움직임 상태일 때 실행 중인지 체크하면 true 반환한다")
     void isRun() {
         // given
-        final Move move = new Move(new ChessGame(), TeamColor.WHITE);
+        final Move move = new Move(new ChessGame());
 
         // when
         boolean isRun = move.isRun();

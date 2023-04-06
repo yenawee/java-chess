@@ -21,11 +21,6 @@ public final class ChessGame {
         this.currentTeamColor = turn;
     }
 
-    public void setUp(final Position source, final Position target, final TeamColor teamColor) {
-        this.currentTeamColor = teamColor;
-        play(source, target);
-    }
-
     public void play(final Position source, final Position target) {
         final Piece piece = chessBoard.getPiece(source);
         if (piece == null) {
@@ -37,6 +32,7 @@ public final class ChessGame {
             throw new IllegalArgumentException("기물 규칙 상 움직일 수 없는 위치입니다.");
         }
         movePiece(source, target, piece);
+        changeTurn();
     }
 
     private void validateTurn(final Piece piece) {
@@ -48,6 +44,10 @@ public final class ChessGame {
     private void movePiece(final Position source, final Position target, final Piece piece) {
         chessBoard.removePiece(source);
         chessBoard.putPiece(target, piece);
+    }
+
+    private void changeTurn() {
+        this.currentTeamColor = currentTeamColor.changeTurn();
     }
 
     public Map<Position, Piece> getChessBoard() {
