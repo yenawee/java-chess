@@ -3,11 +3,11 @@ package chess.controller.state;
 import chess.controller.Command;
 import chess.domain.game.ChessGame;
 
-public final class Start implements State {
+public final class Ready implements State {
 
     private final ChessGame chessGame;
 
-    public Start(final ChessGame chessGame) {
+    public Ready(final ChessGame chessGame) {
         this.chessGame = chessGame;
     }
 

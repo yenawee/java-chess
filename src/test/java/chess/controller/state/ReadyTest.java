@@ -10,13 +10,13 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class StartTest {
+class ReadyTest {
 
     @Test
     @DisplayName(value = "게임이 시작 상태일 때 사용자가 입력한 명령어가 move면 예외가 발생한다.")
     void checkCommandFailWhenMove() {
         // given
-        final Start start = new Start(new ChessGame());
+        final Ready start = new Ready(new ChessGame());
         final Command command = new Command(CommandType.MOVE, List.of("move a2"));
 
         // when, then
@@ -29,7 +29,7 @@ class StartTest {
     @DisplayName(value = "게임이 시작 상태일 때 사용자가 입력한 명령어가 end면 게임이 종료된다.")
     void checkCommand() {
         // given
-        final Start start = new Start(new ChessGame());
+        final Ready start = new Ready(new ChessGame());
         final Command command = new Command(CommandType.END, List.of("end"));
 
         // when
@@ -44,7 +44,7 @@ class StartTest {
     @DisplayName(value = "게임이 시작 상태일 때 실행 중인지 체크하면 true를 반환한다")
     void isRun() {
         // given
-        final Start start = new Start(new ChessGame());
+        final Ready start = new Ready(new ChessGame());
 
         // when
         boolean isRun = start.isRun();

@@ -1,9 +1,10 @@
 package chess.controller;
 
-import chess.controller.state.Start;
+import chess.controller.state.Ready;
 import chess.controller.state.State;
-import chess.dao.ChessGameDao;
-import chess.dao.ChessGameLoader;
+import chess.dao.chessgame.ChessGameDao;
+import chess.dao.chessgame.ChessGameLoader;
+import chess.dao.chessroom.ChessRoomDao;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -15,15 +16,18 @@ import java.util.Map;
 
 public class ChessController {
     private final ChessGameDao chessGameDao;
+    private final ChessRoomDao chessRoomDao;
 
-    public ChessController(final ChessGameDao chessGameDao) {
+
+    public ChessController(final ChessGameDao chessGameDao, final ChessRoomDao chessRoomDao) {
         this.chessGameDao = chessGameDao;
+        this.chessRoomDao = chessRoomDao;
     }
 
     public void run() {
         OutputView.printStartMessage();
         ChessGame chessGame = ChessGameLoader.load(chessGameDao);
-        State gameStatus = new Start(chessGame);
+        State gameStatus = new Ready(chessGame);
         play(chessGame, gameStatus);
     }
 
