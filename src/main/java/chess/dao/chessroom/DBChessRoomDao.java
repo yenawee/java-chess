@@ -1,4 +1,6 @@
-package chess.dao;
+package chess.dao.chessroom;
+
+import chess.dao.chessroom.ChessRoomDao;
 
 import java.util.List;
 
