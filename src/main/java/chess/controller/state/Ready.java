@@ -1,6 +1,6 @@
 package chess.controller.state;
 
-import chess.controller.Command;
+import chess.controller.state.command.Command;
 import chess.domain.game.ChessGame;
 
 public final class Ready implements State {

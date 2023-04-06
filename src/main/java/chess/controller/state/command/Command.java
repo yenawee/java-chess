@@ -1,6 +1,4 @@
-package chess.controller;
-
-import chess.controller.state.CommandType;
+package chess.controller.state.command;
 
 import java.util.Arrays;
 import java.util.List;

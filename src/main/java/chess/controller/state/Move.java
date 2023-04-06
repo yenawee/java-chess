@@ -1,6 +1,6 @@
 package chess.controller.state;
 
-import chess.controller.Command;
+import chess.controller.state.command.Command;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.TeamColor;
 import chess.domain.position.Position;

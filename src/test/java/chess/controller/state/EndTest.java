@@ -1,6 +1,7 @@
 package chess.controller.state;
 
-import chess.controller.Command;
+import chess.controller.state.command.Command;
+import chess.controller.state.command.CommandType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

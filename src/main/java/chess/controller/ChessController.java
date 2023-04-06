@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.controller.state.Ready;
 import chess.controller.state.State;
+import chess.controller.state.command.Command;
 import chess.dao.chessgame.ChessGameDao;
 import chess.dao.chessgame.ChessGameLoader;
 import chess.dao.chessroom.ChessRoomDao;
