@@ -1,5 +1,7 @@
-package chess.dao;
+package chess.dao.chessgame;
 
+import chess.dao.DBConnection;
+import chess.dao.chessgame.ChessGameDao;
 import chess.domain.board.ChessBoard;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;

@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.dao.chessgame;
 
 import chess.domain.game.ChessGame;
 

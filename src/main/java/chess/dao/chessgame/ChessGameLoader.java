@@ -1,5 +1,6 @@
-package chess.dao;
+package chess.dao.chessgame;
 
+import chess.dao.chessgame.ChessGameDao;
 import chess.domain.game.ChessGame;
 
 public class ChessGameLoader {
