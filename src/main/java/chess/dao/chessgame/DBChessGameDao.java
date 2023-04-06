@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessBoardDao implements ChessGameDao {
+public class DBChessGameDao implements ChessGameDao {
     private static final DBConnection dbConnection = new DBConnection();
 
     @Override
