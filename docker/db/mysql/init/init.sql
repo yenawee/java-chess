@@ -1,4 +1,4 @@
-CREATE TABLE chess_room (
+CREATE TABLE chess_board (
     id TINYINT AUTO_INCREMENT,
     turn VARCHAR(255) NOT NULL,
     state VARCHAR(255) NOT NULL,
@@ -11,5 +11,5 @@ CREATE TABLE chess_game (
     piece_rank TINYINT NOT NULL,
     piece_file VARCHAR(255) NOT NULL,
     team VARCHAR(255) NOT NULL,
-    FOREIGN KEY (game_id) REFERENCES chess_room(id)
+    FOREIGN KEY (game_id) REFERENCES chess_board(id)
 );

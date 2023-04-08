@@ -17,7 +17,7 @@ public class DBChessBoardDao implements ChessBoardDao {
 
     @Override
     public void create(ChessBoard chessBoard, String id) {
-        final var query = "INSERT INTO chess_game(game_id, piece_type, piece_rank, piece_file, team) VALUES (?, ?, ?, ?, ?)";
+        final var query = "INSERT INTO chess_board(game_id, piece_type, piece_rank, piece_file, team) VALUES (?, ?, ?, ?, ?)";
         Map<Position, Piece> board = chessBoard.getBoard();
         try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
@@ -37,7 +37,7 @@ public class DBChessBoardDao implements ChessBoardDao {
 
     @Override
     public void updateBoard(ChessBoard chessBoard, String id) {
-        final var query = "UPDATE chess_game SET piece_type = ?, piece_rank = ?, piece_file = ?, team = ? WHERE game_id = ?";
+        final var query = "UPDATE chess_board SET piece_type = ?, piece_rank = ?, piece_file = ?, team = ? WHERE game_id = ?";
         Map<Position, Piece> board = chessBoard.getBoard();
         try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
@@ -58,7 +58,7 @@ public class DBChessBoardDao implements ChessBoardDao {
     public ChessBoard findChessBoardById(String id) {
         Map<Position, Piece> board = new HashMap<>();
         TeamColor turn = null;
-        final var query = "SELECT piece_type, piece_rank, piece_file, team FROM chess_game WHERE game_id = ?";
+        final var query = "SELECT piece_type, piece_rank, piece_file, team FROM chess_board WHERE game_id = ?";
         try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, Integer.parseInt(id));
@@ -87,7 +87,7 @@ public class DBChessBoardDao implements ChessBoardDao {
     }
 
     public void delete(String id) {
-        final var query = "DELETE from chess_game WHERE game_id = ?";
+        final var query = "DELETE from chess_board WHERE game_id = ?";
         try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, Integer.parseInt(id));
@@ -98,7 +98,7 @@ public class DBChessBoardDao implements ChessBoardDao {
     }
 
     public void init(ChessGame chessGame) {
-        final var query = "TRUNCATE TABLE chess_game";
+        final var query = "TRUNCATE TABLE chess_board";
         try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeUpdate();
