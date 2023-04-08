@@ -83,7 +83,7 @@ public class DBChessBoardDao implements ChessBoardDao {
     @Override
     public void update(ChessBoard chessBoard, String id) {
         delete(id);
-        updateBoard(chessBoard, id);
+        create(chessBoard, id);
     }
 
     public void delete(String id) {
