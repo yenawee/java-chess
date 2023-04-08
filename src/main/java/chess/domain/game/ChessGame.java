@@ -50,8 +50,12 @@ public final class ChessGame {
         this.currentTeamColor = currentTeamColor.changeTurn();
     }
 
-    public Map<Position, Piece> getChessBoard() {
+    public Map<Position, Piece> getBoard() {
         return chessBoard.getBoard();
+    }
+
+    public ChessBoard getChessBoard() {
+        return chessBoard;
     }
 
     public boolean isEnd() {
