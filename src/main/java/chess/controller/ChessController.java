@@ -3,10 +3,11 @@ package chess.controller;
 import chess.controller.state.Ready;
 import chess.controller.state.State;
 import chess.controller.state.command.Command;
-import chess.dao.chessgame.ChessGameDao;
+import chess.dao.chessboard.ChessBoardDao;
 import chess.dao.chessroom.ChessRoomDao;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
+import chess.domain.piece.TeamColor;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -15,27 +16,29 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessController {
-    private final ChessGameDao chessGameDao;
+    private final ChessBoardDao chessBoardDao;
     private final ChessRoomDao chessRoomDao;
 
 
-    public ChessController(final ChessGameDao chessGameDao, final ChessRoomDao chessRoomDao) {
-        this.chessGameDao = chessGameDao;
+    public ChessController(final ChessBoardDao chessBoardDao, final ChessRoomDao chessRoomDao) {
+        this.chessBoardDao = chessBoardDao;
         this.chessRoomDao = chessRoomDao;
     }
 
     public void run() {
         ChessGame chessGame;
-//        OutputView.printStartMessage();
         List<String> roomIds = chessRoomDao.readRoomIds();
         String roomId = InputView.getChessRoomId(roomIds);
         if (roomId.equals("new")) {
             chessGame = new ChessGame();
             String newGameRoomId = chessRoomDao.create(chessGame.getCurrentTeamColor().name(), "start");
-            chessGameDao.create(chessGame, newGameRoomId);
+            chessBoardDao.create(chessGame.getChessBoard(), newGameRoomId);
             roomId = newGameRoomId;
+        } else {
+            chessGame = new ChessGame(chessBoardDao.findChessBoardById(roomId),
+                    TeamColor.valueOf(chessRoomDao.readTurn(roomId)));
         }
-        chessGame = chessGameDao.findChessGameById(roomId);
+        OutputView.printStartMessage();
         State gameStatus = new Ready(chessGame);
         play(chessGame, gameStatus, roomId);
     }
@@ -43,12 +46,12 @@ public class ChessController {
     private void play(ChessGame chessGame, State gameStatus, String roomId) {
         while (!chessGame.isEnd() && gameStatus.isRun()) {
             gameStatus = getStatus(gameStatus);
-            chessGameDao.update(chessGame, roomId);
+            chessBoardDao.update(chessGame.getChessBoard(), roomId);
             chessRoomDao.updateTurn(roomId, chessGame.getCurrentTeamColor().name());
-            printChessBoard(gameStatus, chessGame.getChessBoard());
+            printChessBoard(gameStatus, chessGame.getBoard());
         }
         if (chessGame.isEnd()) {
-            chessGameDao.update(chessGame, roomId);
+            chessBoardDao.update(chessGame.getChessBoard(), roomId);
             chessRoomDao.updateState(roomId, "end");
         }
     }
