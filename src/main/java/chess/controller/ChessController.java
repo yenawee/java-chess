@@ -28,6 +28,7 @@ public class ChessController {
     public void run() {
         ChessGame chessGame;
         List<String> roomIds = chessRoomDao.readRoomIds();
+        OutputView.printSelectChessRoomMessage(roomIds);
         String roomId = InputView.getChessRoomId(roomIds);
         if (roomId.equals("new")) {
             chessGame = new ChessGame();

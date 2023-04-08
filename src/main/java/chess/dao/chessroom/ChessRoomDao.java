@@ -10,5 +10,6 @@ public interface ChessRoomDao {
     String create(String turn, String state);
 
     void updateTurn(String id, String turn);
+
     void updateState(String id, String state);
 }

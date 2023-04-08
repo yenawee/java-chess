@@ -1,7 +1,7 @@
 package chess.controller.state;
 
-import chess.controller.state.command.Command;
 import chess.controller.ScoreDto;
+import chess.controller.state.command.Command;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.TeamColor;
 import chess.domain.result.Score;
@@ -19,7 +19,7 @@ public final class End implements State {
     }
 
     public State run(ChessGame chessGame) {
-        Score score = Score.calculate(chessGame.getChessBoard());
+        Score score = Score.calculate(chessGame.getBoard());
         OutputView.printStatus(new ScoreDto(score));
         if (chessGame.isEnd()) {
             TeamColor winner = chessGame.getCurrentTeamColor();

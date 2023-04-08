@@ -1,13 +1,13 @@
 package chess;
 
 import chess.controller.ChessController;
-import chess.dao.chessgame.DBChessGameDao;
-import chess.dao.chessgame.InMemoryChessGameDao;
-import chess.dao.chessroom.InMemoryChessRoomDao;
+import chess.dao.chessboard.DBChessBoardDao;
+import chess.dao.chessroom.DBChessRoomDao;
 
 public class ChessApplication {
     public static void main(String[] args) {
-        final ChessController chessController = new ChessController(new InMemoryChessGameDao(), new InMemoryChessRoomDao());
+        final ChessController chessController = new ChessController(new DBChessBoardDao(), new DBChessRoomDao());
         chessController.run();
+
     }
 }

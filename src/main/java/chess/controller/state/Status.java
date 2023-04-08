@@ -1,9 +1,8 @@
 package chess.controller.state;
 
-import chess.controller.state.command.Command;
 import chess.controller.ScoreDto;
+import chess.controller.state.command.Command;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.TeamColor;
 import chess.domain.result.Score;
 import chess.view.OutputView;
 
@@ -15,7 +14,7 @@ public class Status implements State {
     }
 
     State run() {
-        Score score = Score.calculate(chessGame.getChessBoard());
+        Score score = Score.calculate(chessGame.getBoard());
         OutputView.printStatus(new ScoreDto(score));
         return new Status(chessGame);
     }
