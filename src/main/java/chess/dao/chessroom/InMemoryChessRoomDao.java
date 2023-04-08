@@ -1,26 +1,30 @@
 package chess.dao.chessroom;
 
-import java.util.Collections;
 import java.util.List;
 
 public class InMemoryChessRoomDao implements ChessRoomDao {
     @Override
     public List<String> readRoomIds() {
-        return Collections.emptyList();
+        return null;
     }
 
     @Override
     public String readTurn(String id) {
-        return id;
+        return "turn";
     }
 
     @Override
-    public void create() {
+    public String create(String turn, String state) {
+        return "null";
+    }
+
+    @Override
+    public void updateTurn(String id, String turn) {
 
     }
 
     @Override
-    public void update(String id, String turn) {
+    public void updateState(String id, String state) {
 
     }
 }
