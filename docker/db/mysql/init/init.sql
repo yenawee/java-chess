@@ -5,9 +5,3 @@ CREATE TABLE chess_game (
     team VARCHAR(255) NOT NULL,
     turn VARCHAR(255) NOT NULL
 )
-
-CREATE TABLE chess_room (
-    id INT AUTO_INCREMENT,
-    turn VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id)
-)
