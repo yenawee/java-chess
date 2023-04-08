@@ -23,10 +23,6 @@ public final class InputView {
     }
 
     public static String getChessRoomId(List<String> roomIds) {
-        System.out.println("입장하실 게임방을 선택해주세요");
-        roomIds.stream().forEach(System.out::print);
-        System.out.println("입장이 가능합니다. 새로운 방을 만드려면 'new'를 입력해주세요");
-
         final String input = scanner.nextLine();
         if (roomIds.contains(input) || input.equals("new")) {
             return input;
