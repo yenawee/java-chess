@@ -58,7 +58,7 @@ public class DBChessGameDao implements ChessGameDao {
     public ChessGame findChessGameById(String id) {
         Map<Position, Piece> board = new HashMap<>();
         TeamColor turn = null;
-        final var query = "SELECT piece_type, piece_rank, piece_file, team, turn FROM chess_game WHERE game_id = ?";
+        final var query = "SELECT piece_type, piece_rank, piece_file, team FROM chess_game WHERE game_id = ?";
         try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, Integer.parseInt(id));
@@ -68,7 +68,6 @@ public class DBChessGameDao implements ChessGameDao {
                 int rank = resultSet.getInt("piece_rank");
                 int file = resultSet.getInt("piece_file");
                 TeamColor teamColor = TeamColor.valueOf(resultSet.getString("team"));
-                turn = TeamColor.valueOf(resultSet.getString("turn"));
                 Piece piece = PieceType.toPiece(pieceType, teamColor);
                 board.put(Position.of(rank, file), piece);
             }
@@ -97,7 +96,7 @@ public class DBChessGameDao implements ChessGameDao {
             throw new RuntimeException(e);
         }
     }
-    
+
     public void init(ChessGame chessGame) {
         final var query = "TRUNCATE TABLE chess_game";
         try (final var connection = dbConnection.getConnection();
