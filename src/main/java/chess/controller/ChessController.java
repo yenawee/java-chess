@@ -4,7 +4,6 @@ import chess.controller.state.Ready;
 import chess.controller.state.State;
 import chess.controller.state.command.Command;
 import chess.dao.chessgame.ChessGameDao;
-import chess.dao.chessgame.ChessGameLoader;
 import chess.dao.chessroom.ChessRoomDao;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
@@ -26,20 +25,31 @@ public class ChessController {
     }
 
     public void run() {
-        OutputView.printStartMessage();
-        ChessGame chessGame = ChessGameLoader.load(chessGameDao);
+        ChessGame chessGame;
+//        OutputView.printStartMessage();
+        List<String> roomIds = chessRoomDao.readRoomIds();
+        String roomId = InputView.getChessRoomId(roomIds);
+        if (roomId.equals("new")) {
+            chessGame = new ChessGame();
+            String newGameRoomId = chessRoomDao.create(chessGame.getCurrentTeamColor().name(), "start");
+            chessGameDao.create(chessGame, newGameRoomId);
+            roomId = newGameRoomId;
+        }
+        chessGame = chessGameDao.findChessGameById(roomId);
         State gameStatus = new Ready(chessGame);
-        play(chessGame, gameStatus);
+        play(chessGame, gameStatus, roomId);
     }
 
-    private void play(ChessGame chessGame, State gameStatus) {
+    private void play(ChessGame chessGame, State gameStatus, String roomId) {
         while (!chessGame.isEnd() && gameStatus.isRun()) {
             gameStatus = getStatus(gameStatus);
-            chessGameDao.update(chessGame);
+            chessGameDao.update(chessGame, roomId);
+            chessRoomDao.updateTurn(roomId, chessGame.getCurrentTeamColor().name());
             printChessBoard(gameStatus, chessGame.getChessBoard());
         }
         if (chessGame.isEnd()) {
-            chessGameDao.init(chessGame);
+            chessGameDao.update(chessGame, roomId);
+            chessRoomDao.updateState(roomId, "end");
         }
     }
 
