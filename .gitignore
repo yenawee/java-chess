@@ -32,4 +32,4 @@ out/
 .vscode/
 
 ### docker ###
-./src/main/java/chess/docker/db.mysql
+./docker/db
