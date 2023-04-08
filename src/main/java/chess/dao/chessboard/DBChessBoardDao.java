@@ -1,4 +1,4 @@
-package chess.dao.chessgame;
+package chess.dao.chessboard;
 
 import chess.dao.DBConnection;
 import chess.domain.board.ChessBoard;
@@ -12,13 +12,13 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DBChessGameDao implements ChessGameDao {
+public class DBChessBoardDao implements ChessBoardDao {
     private static final DBConnection dbConnection = new DBConnection();
 
     @Override
-    public void create(ChessGame chessGame, String id) {
+    public void create(ChessBoard chessBoard, String id) {
         final var query = "INSERT INTO chess_game(game_id, piece_type, piece_rank, piece_file, team) VALUES (?, ?, ?, ?, ?)";
-        Map<Position, Piece> board = chessGame.getChessBoard();
+        Map<Position, Piece> board = chessBoard.getBoard();
         try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             for (Map.Entry<Position, Piece> boardEntry : board.entrySet()) {
@@ -36,9 +36,9 @@ public class DBChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void updateBoard(ChessGame chessGame, String id) {
+    public void updateBoard(ChessBoard chessBoard, String id) {
         final var query = "UPDATE chess_game SET piece_type = ?, piece_rank = ?, piece_file = ?, team = ? WHERE game_id = ?";
-        Map<Position, Piece> board = chessGame.getChessBoard();
+        Map<Position, Piece> board = chessBoard.getBoard();
         try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             for (Map.Entry<Position, Piece> boardEntry : board.entrySet()) {
@@ -55,7 +55,7 @@ public class DBChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public ChessGame findChessGameById(String id) {
+    public ChessBoard findChessBoardById(String id) {
         Map<Position, Piece> board = new HashMap<>();
         TeamColor turn = null;
         final var query = "SELECT piece_type, piece_rank, piece_file, team FROM chess_game WHERE game_id = ?";
@@ -77,13 +77,13 @@ public class DBChessGameDao implements ChessGameDao {
         if (board.isEmpty()) {
             return null;
         }
-        return new ChessGame(new ChessBoard(board), turn.changeTurn());
+        return new ChessBoard(board);
     }
 
     @Override
-    public void update(ChessGame chessGame, String id) {
+    public void update(ChessBoard chessBoard, String id) {
         delete(id);
-        updateBoard(chessGame, id);
+        updateBoard(chessBoard, id);
     }
 
     public void delete(String id) {
